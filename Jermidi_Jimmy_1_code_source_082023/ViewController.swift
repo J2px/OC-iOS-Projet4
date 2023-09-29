@@ -15,47 +15,21 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
 
     @IBOutlet var mainView: UIView!
-    @IBOutlet weak var renderingView: UIView!
-    @IBOutlet weak var addView1: UIView!
-    @IBOutlet weak var addButton1: UIButton!
-    @IBOutlet weak var plusImage1: UIImageView!
-    @IBOutlet weak var addImage1: UIImageView!
-    @IBOutlet weak var addView2: UIView!
-    @IBOutlet weak var addButton2: UIButton!
-    @IBOutlet weak var plusImage2: UIImageView!
-    @IBOutlet weak var addImage2: UIImageView!
-    @IBOutlet weak var addView3: UIView!
-    @IBOutlet weak var addButton3: UIButton!
-    @IBOutlet weak var plusImage3: UIImageView!
-    @IBOutlet weak var addImage3: UIImageView!
-    @IBOutlet weak var addView4: UIView!
-    @IBOutlet weak var addButton4: UIButton!
-    @IBOutlet weak var plusImage4: UIImageView!
-    @IBOutlet weak var addImage4: UIImageView!
-    @IBOutlet weak var rectAddViewTop: UIView!
-    @IBOutlet weak var addButtonTop: UIButton!
-    @IBOutlet weak var addViewImageTop: UIImageView!
-    @IBOutlet weak var plusViewImageTop: UIImageView!
-    @IBOutlet weak var rectAddViewBottom: UIView!
-    @IBOutlet weak var addButtonBottom: UIButton!
-    @IBOutlet weak var addViewImageBottom: UIImageView!
-    @IBOutlet weak var plusViewImageBottom: UIImageView!
-    @IBOutlet weak var selectView1: UIView!
-    @IBOutlet weak var selectedView1: UIImageView!
-    @IBOutlet weak var selectButton1: UIButton!
-    @IBOutlet weak var selectView2: UIView!
-    @IBOutlet weak var selectedView2: UIImageView!
-    @IBOutlet weak var selectedButton2: UIButton!
-    @IBOutlet weak var selectView3: UIView!
-    @IBOutlet weak var selectedView3: UIImageView!
-    @IBOutlet weak var selectButton3: UIButton!
+   
+    @IBOutlet weak var ImgButton1: UIButton!
+    @IBOutlet weak var ImgButton2: UIButton!
+    @IBOutlet weak var ImgButton3: UIButton!
+    @IBOutlet weak var ImgButton4: UIButton!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        hideViews1()
         
-        let swipeGestureRecognizerUp = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        //hideViews1()
+        
+       /* let swipeGestureRecognizerUp = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         swipeGestureRecognizerUp.direction = .up
         
         
@@ -63,7 +37,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         
-        mainView.addGestureRecognizer(swipeGestureRecognizerUp)
+        mainView.addGestureRecognizer(swipeGestureRecognizerUp)*/
         
     }
 
@@ -79,7 +53,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         startOption3()
     }
     
-    @IBAction func tapAdd1(_ sender: Any) {
+  /*  @IBAction func tapAdd1(_ sender: Any) {
         selectedImageView = addImage1
         plusImageView = plusImage1
         present(imagePicker, animated: true, completion: nil)
@@ -117,7 +91,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         plusImageView = plusViewImageBottom
         present(imagePicker, animated: true, completion: nil)
         
-    }
+    }*/
     
     
     private func startOption1(){
@@ -136,7 +110,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
     
     private func hideViews1(){
-        selectedView1.isHidden = false
+        ImgButton1.isHidden = false
+        ImgButton2.isHidden = false
+        ImgButton3.isHidden = true
+        ImgButton4.isHidden = true
+    /*  selectedView1.isHidden = false
         selectedView2.isHidden = true
         selectedView3.isHidden = true
         addView1.isHidden = true
@@ -144,11 +122,14 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         addView3.isHidden = false
         addView4.isHidden = false
         rectAddViewTop.isHidden = false
-        rectAddViewBottom.isHidden = true
+        rectAddViewBottom.isHidden = true*/
     }
     
     private func hideViews2(){
-        selectedView1.isHidden = true
+        ImgButton1.isHidden = true
+        ImgButton2.isHidden = true
+        ImgButton3.isHidden = false
+        ImgButton4.isHidden = false       /* selectedView1.isHidden = true
         selectedView2.isHidden = false
         selectedView3.isHidden = true
         addView1.isHidden = false
@@ -156,11 +137,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         addView3.isHidden = true
         addView4.isHidden = true
         rectAddViewTop.isHidden = true
-        rectAddViewBottom.isHidden = false
+        rectAddViewBottom.isHidden = false */
     }
     
     private func hideViews3(){
-        selectedView1.isHidden = true
+        ImgButton1.isHidden = false
+        ImgButton2.isHidden = false
+        ImgButton3.isHidden = false
+        ImgButton4.isHidden = false
+    /* selectedView1.isHidden = true
         selectedView2.isHidden = true
         selectedView3.isHidden = false
         addView1.isHidden = false
@@ -168,11 +153,11 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         addView3.isHidden = false
         addView4.isHidden = false
         rectAddViewTop.isHidden = true
-        rectAddViewBottom.isHidden = true
+        rectAddViewBottom.isHidden = true*/
         
     }
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+    /*func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let selectedImage = info[.originalImage] as? UIImage,let imageView = selectedImageView{
                 
                 let resizedImage = resizeImage(selectedImage, targetSize: imageView.frame.size)
@@ -214,7 +199,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         let item = [image]
         let activityController = UIActivityViewController(activityItems: item, applicationActivities: nil)
         present(activityController, animated: true)
-    }
+    }*/
 
 
     
