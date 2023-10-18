@@ -9,6 +9,7 @@ import UIKit
 
 class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate{
     
+    var selectedButton: UIButton?
     let imagePicker = UIImagePickerController()
     var selectedImageView: UIImageView?
     var plusImageView: UIImageView?
@@ -21,13 +22,34 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var ImgButton3: UIButton!
     @IBOutlet weak var ImgButton4: UIButton!
     
-    
+    @IBOutlet weak var SelectButton1: UIButton!
+    @IBOutlet weak var SelectButton2: UIButton!
+    @IBOutlet weak var SelectButton3: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
-        //hideViews1()
+        hideViews1()
+        
+        let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(imageButtonTapped(_:)))
+        ImgButton1.addGestureRecognizer(tapGesture1)
+
+                let tapGesture2 = UITapGestureRecognizer(target: self, action: #selector(imageButtonTapped(_:)))
+        ImgButton2.addGestureRecognizer(tapGesture2)
+
+                let tapGesture3 = UITapGestureRecognizer(target: self, action: #selector(imageButtonTapped(_:)))
+        ImgButton3.addGestureRecognizer(tapGesture3)
+
+                let tapGesture4 = UITapGestureRecognizer(target: self, action: #selector(imageButtonTapped(_:)))
+        ImgButton4.addGestureRecognizer(tapGesture4)
+       
+        /*
+        imagePicker.delegate = self
+        imagePicker.sourceType = .photoLibrary
+        */
+  
+        
         
        /* let swipeGestureRecognizerUp = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         swipeGestureRecognizerUp.direction = .up
@@ -42,102 +64,52 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     }
 
     @IBAction func tapSelect1(_ sender: Any) {
-        startOption1()
+        hideViews1()
     }
     
     @IBAction func tapSelect2(_ sender: Any) {
-        startOption2()
+        hideViews2()
     }
     
     @IBAction func tapSelect3(_ sender: Any) {
-        startOption3()
-    }
-    
-  /*  @IBAction func tapAdd1(_ sender: Any) {
-        selectedImageView = addImage1
-        plusImageView = plusImage1
-        present(imagePicker, animated: true, completion: nil)
-
-    }
-    
-    @IBAction func tapAdd2(_ sender: Any) {
-        selectedImageView = addImage2
-        plusImageView = plusImage2
-        present(imagePicker, animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func tappAdd3(_ sender: Any) {
-        selectedImageView = addImage3
-        plusImageView = plusImage3
-        present(imagePicker, animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func tappAdd4(_ sender: Any) {
-        selectedImageView = addImage4
-        plusImageView = plusImage4
-        present(imagePicker, animated: true, completion: nil)    }
-    
-    @IBAction func tapAddTop(_ sender: Any) {
-        selectedImageView = addViewImageTop
-        plusImageView = plusViewImageTop
-        present(imagePicker, animated: true, completion: nil)
-        
-    }
-    
-    @IBAction func tapAddBottom(_ sender: Any) {
-        selectedImageView = addViewImageBottom
-        plusImageView = plusViewImageBottom
-        present(imagePicker, animated: true, completion: nil)
-        
-    }*/
-    
-    
-    private func startOption1(){
-        hideViews1()
-        
-    }
-    
-    private func startOption2(){
-        hideViews2()
-        
-    }
-    
-    private func startOption3(){
         hideViews3()
-        
     }
+    
+  
+    @objc func imageButtonTapped(_ sender: UITapGestureRecognizer) {
+            selectedButton = sender.view as? UIButton
+            let imagePicker = UIImagePickerController()
+            imagePicker.sourceType = .photoLibrary
+            imagePicker.delegate = self
+            present(imagePicker, animated: true, completion: nil)
+        }
+    
+    
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+            if let image = info[.originalImage] as? UIImage, let button = selectedButton {
+                button.setBackgroundImage(image, for: .normal)
+            }
+            picker.dismiss(animated: true, completion: nil)
+        }
     
     private func hideViews1(){
         ImgButton1.isHidden = false
-        ImgButton2.isHidden = false
-        ImgButton3.isHidden = true
-        ImgButton4.isHidden = true
-    /*  selectedView1.isHidden = false
-        selectedView2.isHidden = true
-        selectedView3.isHidden = true
-        addView1.isHidden = true
-        addView2.isHidden = true
-        addView3.isHidden = false
-        addView4.isHidden = false
-        rectAddViewTop.isHidden = false
-        rectAddViewBottom.isHidden = true*/
+        ImgButton2.isHidden = true
+        ImgButton3.isHidden = false
+        ImgButton4.isHidden = false
+        //hideButtonBackground(button: SelectButton2)
+        //hideButtonBackground(button: SelectButton3)
     }
     
     private func hideViews2(){
-        ImgButton1.isHidden = true
-        ImgButton2.isHidden = true
+        ImgButton1.isHidden = false
+        ImgButton2.isHidden = false
         ImgButton3.isHidden = false
-        ImgButton4.isHidden = false       /* selectedView1.isHidden = true
-        selectedView2.isHidden = false
-        selectedView3.isHidden = true
-        addView1.isHidden = false
-        addView2.isHidden = false
-        addView3.isHidden = true
-        addView4.isHidden = true
-        rectAddViewTop.isHidden = true
-        rectAddViewBottom.isHidden = false */
+        ImgButton4.isHidden = true
+        //hideButtonBackground(button: SelectButton2)
+        //hideButtonBackground(button: SelectButton3)
+
     }
     
     private func hideViews3(){
@@ -145,17 +117,53 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         ImgButton2.isHidden = false
         ImgButton3.isHidden = false
         ImgButton4.isHidden = false
-    /* selectedView1.isHidden = true
-        selectedView2.isHidden = true
-        selectedView3.isHidden = false
-        addView1.isHidden = false
-        addView2.isHidden = false
-        addView3.isHidden = false
-        addView4.isHidden = false
-        rectAddViewTop.isHidden = true
-        rectAddViewBottom.isHidden = true*/
-        
+        //hideButtonBackground(button: SelectButton2)
+        //hideButtonBackground(button: SelectButton3)
     }
+    
+    private func hideButtonBackground(button: UIButton){
+        button.setBackgroundImage(nil, for: .normal)
+    }
+    
+    /*  @IBAction func tapAdd1(_ sender: Any) {
+          selectedImageView = addImage1
+          plusImageView = plusImage1
+          present(imagePicker, animated: true, completion: nil)
+
+      }
+      
+      @IBAction func tapAdd2(_ sender: Any) {
+          selectedImageView = addImage2
+          plusImageView = plusImage2
+          present(imagePicker, animated: true, completion: nil)
+          
+      }
+      
+      @IBAction func tappAdd3(_ sender: Any) {
+          selectedImageView = addImage3
+          plusImageView = plusImage3
+          present(imagePicker, animated: true, completion: nil)
+          
+      }
+      
+      @IBAction func tappAdd4(_ sender: Any) {
+          selectedImageView = addImage4
+          plusImageView = plusImage4
+          present(imagePicker, animated: true, completion: nil)    }
+      
+      @IBAction func tapAddTop(_ sender: Any) {
+          selectedImageView = addViewImageTop
+          plusImageView = plusViewImageTop
+          present(imagePicker, animated: true, completion: nil)
+          
+      }
+      
+      @IBAction func tapAddBottom(_ sender: Any) {
+          selectedImageView = addViewImageBottom
+          plusImageView = plusViewImageBottom
+          present(imagePicker, animated: true, completion: nil)
+          
+      }*/
     
     /*func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
             if let selectedImage = info[.originalImage] as? UIImage,let imageView = selectedImageView{
