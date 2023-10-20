@@ -44,14 +44,10 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
                 let tapGesture4 = UITapGestureRecognizer(target: self, action: #selector(imageButtonTapped(_:)))
         ImgButton4.addGestureRecognizer(tapGesture4)
        
-        /*
-        imagePicker.delegate = self
-        imagePicker.sourceType = .photoLibrary
-        */
   
         
         
-       /* let swipeGestureRecognizerUp = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
+        let swipeGestureRecognizerUp = UISwipeGestureRecognizer(target: self, action: #selector(didSwipe(_:)))
         swipeGestureRecognizerUp.direction = .up
         
         
@@ -59,7 +55,7 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         
-        mainView.addGestureRecognizer(swipeGestureRecognizerUp)*/
+        mainView.addGestureRecognizer(swipeGestureRecognizerUp)
         
     }
 
@@ -86,12 +82,30 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     
     
     
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+    /*func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
             if let image = info[.originalImage] as? UIImage, let button = selectedButton {
-                button.setBackgroundImage(image, for: .normal)
+                button.setImage(image, for: .normal)
             }
             picker.dismiss(animated: true, completion: nil)
+        }*/
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        if let originalImage = info[.originalImage] as? UIImage, let button = selectedButton {
+            if let croppedImage = resizeAndCropImage(originalImage, toSize: button.bounds.size) {
+                button.setImage(croppedImage, for: .normal)
+            }
         }
+        picker.dismiss(animated: true, completion: nil)
+    }
+    
+    func resizeAndCropImage(_ image: UIImage, toSize size: CGSize) -> UIImage? {
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let croppedImage = renderer.image { context in
+            let targetRect = CGRect(origin: .zero, size: size)
+            image.draw(in: targetRect)
+        }
+        return croppedImage
+    }
     
     private func hideViews1(){
         ImgButton1.isHidden = false
@@ -197,17 +211,17 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         UIGraphicsEndImageContext()
         
         return newImage ?? image
-    }
+    }*/
     
     @objc private func didSwipe(_ sender: UISwipeGestureRecognizer) {
-        let renderer = UIGraphicsImageRenderer(size: renderingView.bounds.size)
+        let renderer = UIGraphicsImageRenderer(size: mainView.bounds.size)
         let image = renderer.image { ctx in
-            renderingView.drawHierarchy(in: renderingView.bounds, afterScreenUpdates: true)
+            mainView.drawHierarchy(in: mainView.bounds, afterScreenUpdates: true)
         }
         let item = [image]
         let activityController = UIActivityViewController(activityItems: item, applicationActivities: nil)
         present(activityController, animated: true)
-    }*/
+    }
 
 
     
