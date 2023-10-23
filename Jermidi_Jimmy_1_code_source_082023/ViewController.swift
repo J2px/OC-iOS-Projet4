@@ -26,11 +26,16 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
     @IBOutlet weak var SelectButton2: UIButton!
     @IBOutlet weak var SelectButton3: UIButton!
     
+    @IBOutlet weak var SelectImage1: UIImageView!
+    @IBOutlet weak var SelectImage2: UIImageView!
+    @IBOutlet weak var SelectImage3: UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
         hideViews1()
+        
         
         let tapGesture1 = UITapGestureRecognizer(target: self, action: #selector(imageButtonTapped(_:)))
         ImgButton1.addGestureRecognizer(tapGesture1)
@@ -77,23 +82,20 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
             let imagePicker = UIImagePickerController()
             imagePicker.sourceType = .photoLibrary
             imagePicker.delegate = self
+            imagePicker.allowsEditing = true
             present(imagePicker, animated: true, completion: nil)
         }
     
     
     
-    /*func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-            if let image = info[.originalImage] as? UIImage, let button = selectedButton {
-                button.setImage(image, for: .normal)
-            }
-            picker.dismiss(animated: true, completion: nil)
-        }*/
+   
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
-        if let originalImage = info[.originalImage] as? UIImage, let button = selectedButton {
-            if let croppedImage = resizeAndCropImage(originalImage, toSize: button.bounds.size) {
-                button.setImage(croppedImage, for: .normal)
-            }
+        if let originalImage = info[.editedImage] as? UIImage, let button = selectedButton {
+            button.setImage(originalImage, for: .normal)
+            /*if let croppedImage = resizeAndCropImage(originalImage, toSize: button.bounds.size) {
+                
+            }*/
         }
         picker.dismiss(animated: true, completion: nil)
     }
@@ -112,8 +114,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         ImgButton2.isHidden = true
         ImgButton3.isHidden = false
         ImgButton4.isHidden = false
-        //hideButtonBackground(button: SelectButton2)
-        //hideButtonBackground(button: SelectButton3)
+        SelectImage1.isHidden = false
+        SelectImage2.isHidden = true
+        SelectImage3.isHidden = true
     }
     
     private func hideViews2(){
@@ -121,8 +124,9 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         ImgButton2.isHidden = false
         ImgButton3.isHidden = false
         ImgButton4.isHidden = true
-        //hideButtonBackground(button: SelectButton2)
-        //hideButtonBackground(button: SelectButton3)
+        SelectImage1.isHidden = true
+        SelectImage2.isHidden = false
+        SelectImage3.isHidden = true
 
     }
     
@@ -131,13 +135,15 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
         ImgButton2.isHidden = false
         ImgButton3.isHidden = false
         ImgButton4.isHidden = false
-        //hideButtonBackground(button: SelectButton2)
-        //hideButtonBackground(button: SelectButton3)
+        SelectImage1.isHidden = true
+        SelectImage2.isHidden = true
+        SelectImage3.isHidden = false
     }
     
     private func hideButtonBackground(button: UIButton){
-        button.setBackgroundImage(nil, for: .normal)
+        button.setImage(nil, for: .normal)
     }
+    
     
     /*  @IBAction func tapAdd1(_ sender: Any) {
           selectedImageView = addImage1
